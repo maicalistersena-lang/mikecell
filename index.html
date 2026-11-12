@@ -4,34 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#000000">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>MIKE CELL — Assistência Técnica & Diagnóstico Inteligente</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gold: #C5A880;
-            --gold-bright: #E5C595;
-            --cyan: #00F2FE;
-        }
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #030303;
+            background-color: #050505;
             color: #ffffff;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(197, 168, 128, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 85% 30%, rgba(0, 242, 254, 0.06) 0%, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+                radial-gradient(circle at 50% 0%, rgba(197, 168, 128, 0.14) 0%, transparent 45%),
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 100% 100%, 28px 28px, 28px 28px;
         }
         .glass-card {
-            background: rgba(14, 14, 16, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.85);
+            background: rgba(15, 15, 18, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.9);
         }
         .gold-gradient-text {
             background: linear-gradient(135deg, #F3DCBA 0%, #C5A880 50%, #9E7F56 100%);
@@ -42,8 +32,187 @@
             background: linear-gradient(135deg, #DFC298 0%, #C5A880 55%, #A6885E 100%);
             box-shadow: 0 4px 20px rgba(197, 168, 128, 0.35);
         }
-        .gold-btn:hover {
-            filter: brightness(1.08);
-            transform: translateY(-1px);
+        .brand-card { transition: all 0.25s ease; }
+        .brand-card:hover {
+            border-color: #00F2FE;
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.28);
+            transform: translateY(-2px);
         }
-        .brand-card
+        .logo-glow { filter: drop-shadow(0 0 22px rgba(197, 168, 128, 0.3)); }
+        .pulse-whatsapp { animation: pulseGreen 2s infinite; }
+        @keyframes pulseGreen {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+            70% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        .custom-check:checked + div {
+            border-color: #00F2FE;
+            background: rgba(0, 242, 254, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16">
+
+    <!-- BARRA SUPERIOR -->
+    <div class="bg-zinc-950/90 border-b border-zinc-900 px-4 py-2 flex justify-between items-center max-w-xl mx-auto text-[11px]">
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-zinc-300 font-medium">Bancada Online • DF</span>
+        </div>
+        <button onclick="abrirModalApp()" class="text-cyan-400 font-bold bg-cyan-950/50 border border-cyan-500/30 px-2.5 py-1 rounded-full">
+            📲 Instalar App
+        </button>
+    </div>
+
+    <!-- CABEÇALHO COM SUA LOGO -->
+    <header class="pt-5 pb-4 text-center px-4">
+        <img src="logo-mikecell.jpg" alt="MIKE CELL - Assistência Técnica de Celulares" class="mx-auto max-w-[285px] sm:max-w-[330px] w-full h-auto rounded-2xl logo-glow">
+        <div class="mt-2 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-zinc-900/90 border border-amber-500/30">
+            <span class="text-[11px] font-bold tracking-widest uppercase gold-gradient-text">Sistema Inteligente de Pré-Orçamento</span>
+        </div>
+    </header>
+
+    <main class="max-w-xl mx-auto px-4 mt-2 space-y-5">
+
+        <!-- PESQUISA RÁPIDA -->
+        <input type="text" id="busca-rapida" onkeyup="filtrarCatalogo()" placeholder="🔍 Buscar modelo direto (Ex: iPhone 12, A14, Poco X3)..." class="w-full bg-zinc-950 border border-zinc-800 text-sm text-white rounded-xl py-3.5 px-4 focus:outline-none focus:border-cyan-400">
+
+        <!-- ETAPA 1: MARCAS -->
+        <section id="sec-marcas" class="glass-card p-5 rounded-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-sm font-extrabold uppercase tracking-wider gold-gradient-text">1. Selecione a Marca</h2>
+                <span class="text-[11px] text-cyan-400 font-semibold">Passo 1 de 3</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <button onclick="escolherMarca('Samsung')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                    <span class="block font-extrabold text-sm">SAMSUNG</span>
+                    <span class="text-[10px] text-zinc-400">Linha A, S, M, Note</span>
+                </button>
+                <button onclick="escolherMarca('iPhone / Apple')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                    <span class="block font-extrabold text-sm">IPHONE</span>
+                    <span class="text-[10px] text-zinc-400">iOS • Placa & Tela</span>
+                </button>
+                <button onclick="escolherMarca('Xiaomi / Poco')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                    <span class="block font-extrabold text-sm">XIAOMI</span>
+                    <span class="text-[10px] text-zinc-400">Redmi, Poco, Mi</span>
+                </button>
+                <button onclick="escolherMarca('Motorola')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                    <span class="block font-extrabold text-sm">MOTOROLA</span>
+                    <span class="text-[10px] text-zinc-400">Moto G, Edge, One</span>
+                </button>
+                <button onclick="escolherMarca('Realme')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                    <span class="block font-extrabold text-sm">REALME</span>
+                    <span class="text-[10px] text-zinc-400">Linha C, Narzo, GT</span>
+                </button>
+                <button onclick="escolherMarca('Outra Marca')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                    <span class="block font-extrabold text-sm">OUTRA</span>
+                    <span class="text-[10px] text-zinc-400">LG, Asus, Infinix...</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ETAPA 2: MODELO E SINTOMAS -->
+        <section id="sec-detalhes" class="hidden glass-card p-5 rounded-2xl space-y-5">
+            <div class="flex justify-between items-center border-b border-zinc-800 pb-3">
+                <div>
+                    <span class="text-[11px] uppercase text-zinc-400">Marca:</span>
+                    <strong id="label-marca" class="text-sm gold-gradient-text ml-1 font-extrabold"></strong>
+                </div>
+                <button onclick="voltarMarcas()" class="text-xs text-cyan-400 underline font-semibold">← Trocar marca</button>
+            </div>
+
+            <div>
+                <label class="block text-xs font-extrabold uppercase gold-gradient-text mb-2">2. Qual o modelo exato?</label>
+                <input type="text" id="campo-modelo" placeholder="Ex: Galaxy A14, iPhone 11, Poco X3 Pro..." class="w-full bg-zinc-900 border border-zinc-700 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-cyan-400">
+            </div>
+
+            <div>
+                <div class="flex justify-between items-center mb-1">
+                    <label class="block text-xs font-extrabold uppercase gold-gradient-text">3. Marque o que está acontecendo</label>
+                    <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-700/40 px-2 py-0.5 rounded-full font-bold">2+ itens = 15% OFF no 2º</span>
+                </div>
+                <p class="text-xs text-zinc-400 mb-3">Selecione uma ou mais opções com ✅:</p>
+
+                <div class="space-y-2.5" id="lista-opcoes">
+                    <label class="block cursor-pointer">
+                        <input type="checkbox" id="chk-tela" onchange="toggleQualidadeTela()" data-min="150" data-max="450" data-tipo="tela" data-diag="Troca de Módulo Frontal (Display / Touch)" value="Tela quebrada, trincada ou sem imagem" class="hidden custom-check">
+                        <div class="flex items-center justify-between bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">📱</span>
+                                <span class="text-sm font-medium">Tela quebrada, trincada ou sem imagem</span>
+                            </div>
+                            <span class="text-xs text-cyan-400 font-bold">✅</span>
+                        </div>
+                    </label>
+
+                    <div id="box-qualidade-tela" class="hidden bg-zinc-950 border border-amber-500/40 p-4 rounded-xl space-y-2.5">
+                        <p class="text-xs font-bold gold-gradient-text uppercase">Escolha a qualidade da tela desejada:</p>
+                        <label class="flex items-start gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 cursor-pointer">
+                            <input type="radio" name="qualidadeTela" value="OLED / Original Nacional (+ Película 3D Grátis)" data-extra-min="70" data-extra-max="160" checked class="mt-1 accent-cyan-400">
+                            <div>
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="text-xs font-extrabold text-white">Linha OLED / Qualidade Original</span>
+                                    <span class="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-400/40 px-1.5 py-0.5 rounded font-bold">🎁 Película 3D Grátis</span>
+                                </div>
+                                <p class="text-[11px] text-zinc-400 mt-0.5">Brilho intenso, toque preciso e menor consumo.</p>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 cursor-pointer">
+                            <input type="radio" name="qualidadeTela" value="Primeira Linha / Incell (Econômica)" data-extra-min="0" data-extra-max="0" class="mt-1 accent-cyan-400">
+                            <div>
+                                <span class="text-xs font-extrabold text-zinc-200">Primeira Linha / Incell (Custo-Benefício)</span>
+                                <p class="text-[11px] text-zinc-400 mt-0.5">Opção econômica para voltar a usar gastando menos.</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <label class="block cursor-pointer">
+                        <input type="checkbox" data-min="120" data-max="260" data-tipo="bateria" data-diag="Substituição de Bateria Nova de Alta Capacidade" value="Bateria viciada, descarregando rápido ou estufada" class="hidden custom-check">
+                        <div class="flex items-center justify-between bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">🔋</span>
+                                <span class="text-sm font-medium">Bateria descarregando rápido ou estufada</span>
+                            </div>
+                            <span class="text-xs text-cyan-400 font-bold">✅</span>
+                        </div>
+                    </label>
+
+                    <label class="block cursor-pointer">
+                        <input type="checkbox" data-min="80" data-max="210" data-tipo="carga" data-diag="Limpeza Técnica de Dock ou Troca do Conector/Subplaca" value="Não carrega ou está com mau contato no cabo" class="hidden custom-check">
+                        <div class="flex items-center justify-between bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">⚡</span>
+                                <span class="text-sm font-medium">Não está carregando ou com mau contato</span>
+                            </div>
+                            <span class="text-xs text-cyan-400 font-bold">✅</span>
+                        </div>
+                    </label>
+
+                    <label class="block cursor-pointer">
+                        <input type="checkbox" data-min="120" data-max="420" data-tipo="placa" data-diag="Diagnóstico de Consumo na Fonte Assimétrica / Reparo em Placa" value="Celular não liga de jeito nenhum" class="hidden custom-check">
+                        <div class="flex items-center justify-between bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">🔌</span>
+                                <span class="text-sm font-medium">Celular não liga de jeito nenhum</span>
+                            </div>
+                            <span class="text-xs text-cyan-400 font-bold">✅</span>
+                        </div>
+                    </label>
+
+                    <label class="block cursor-pointer">
+                        <input type="checkbox" data-min="100" data-max="320" data-tipo="agua" data-diag="Banho Químico / Desoxidação Ultrassônica e Análise de Placa" value="Caiu na água ou teve contato com líquido" class="hidden custom-check">
+                        <div class="flex items-center justify-between bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">💧</span>
+                                <span class="text-sm font-medium">Caiu na água ou molhou</span>
+                            </div>
+                            <span class="text-xs text-cyan-400 font-bold">✅</span>
+                        </div>
+                    </label>
+
+                    <label class="block cursor-pointer">
+                        <input type="checkbox" data-min="80" data-max="220" data-tipo="carcaca" data-diag="Troca de Tampa Traseira, Alto-Falante, Microfone ou Câmera" value="Sofreu queda / dano na tampa traseira, som ou câmera" class="hidden custom-check">
+                        <div class="flex items-center justify-between bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">🛠️</span>
+                                <span class="text-sm font-medium">Sofreu queda / dano
