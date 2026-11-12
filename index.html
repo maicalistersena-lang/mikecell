@@ -2,244 +2,48 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIKE CELL - Assistência Técnica & Orçamento Online</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>MIKE CELL — Assistência Técnica & Diagnóstico Inteligente</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Montserrat', sans-serif; background-color: #000000; color: #ffffff; }
-        .gold-border { border-color: #C5A880; }
-        .gold-text { color: #C5A880; }
-        .gold-bg { background-color: #C5A880; }
-        .cyan-glow:hover { border-color: #00f2fe; box-shadow: 0 0 12px rgba(0, 242, 254, 0.25); }
-    </style>
-</head>
-<body class="min-h-screen pb-14">
-
-    <!-- CABEÇALHO COM SUA LOGO ORIGINAL -->
-    <header class="bg-black pt-4 pb-5 border-b border-zinc-900 text-center">
-        <img src="logo-mikecell.jpg" alt="MIKE CELL - Assistência Técnica de Celulares" class="mx-auto max-w-[290px] sm:max-w-[340px] w-full h-auto">
-        <p class="text-xs text-zinc-400 mt-1 tracking-widest uppercase">Catálogo de Serviços & Pré-Orçamento</p>
-    </header>
-
-    <main class="max-w-xl mx-auto px-4 mt-5 space-y-5">
-
-        <!-- BARRA DE PESQUISA RÁPIDA ESTILO CATÁLOGO -->
-        <div class="relative">
-            <input type="text" id="busca-rapida" onkeyup="filtrarCatalogo()" placeholder="🔍 Pesquisar modelo (ex: iPhone 12, A14, Poco X3)..." class="w-full bg-zinc-950 border border-zinc-800 text-sm text-white rounded-xl py-3.5 px-4 focus:outline-none focus:border-[#00f2fe]">
-        </div>
-
-        <!-- ETAPA 1: MARCAS -->
-        <section id="sec-marcas" class="bg-zinc-950 p-5 rounded-2xl border border-zinc-900">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-sm font-bold uppercase tracking-wider gold-text">1. Escolha a Marca</h2>
-                <span class="text-[11px] text-zinc-500">Toque para selecionar</span>
-            </div>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="grid-marcas">
-                <button onclick="escolherMarca('Samsung')" class="cyan-glow bg-zinc-900 border border-zinc-800 p-4 rounded-xl font-bold text-sm transition">SAMSUNG</button>
-                <button onclick="escolherMarca('iPhone / Apple')" class="cyan-glow bg-zinc-900 border border-zinc-800 p-4 rounded-xl font-bold text-sm transition">IPHONE</button>
-                <button onclick="escolherMarca('Xiaomi / Poco')" class="cyan-glow bg-zinc-900 border border-zinc-800 p-4 rounded-xl font-bold text-sm transition">XIAOMI</button>
-                <button onclick="escolherMarca('Motorola')" class="cyan-glow bg-zinc-900 border border-zinc-800 p-4 rounded-xl font-bold text-sm transition">MOTOROLA</button>
-                <button onclick="escolherMarca('Realme')" class="cyan-glow bg-zinc-900 border border-zinc-800 p-4 rounded-xl font-bold text-sm transition">REALME</button>
-                <button onclick="escolherMarca('Outra Marca')" class="cyan-glow bg-zinc-900 border border-zinc-800 p-4 rounded-xl font-bold text-sm transition">OUTRA</button>
-            </div>
-        </section>
-
-        <!-- ETAPA 2: MODELO E SERVIÇO OU SINTOMAS -->
-        <section id="sec-detalhes" class="hidden bg-zinc-950 p-5 rounded-2xl border border-zinc-900 space-y-5">
-            <div class="flex justify-between items-center border-b border-zinc-900 pb-3">
-                <div>
-                    <span class="text-xs text-zinc-400">Marca:</span>
-                    <strong id="label-marca" class="text-sm gold-text ml-1"></strong>
-                </div>
-                <button onclick="voltarMarcas()" class="text-xs text-cyan-400 underline">Trocar marca</button>
-            </div>
-
-            <div>
-                <label class="block text-xs font-bold uppercase gold-text mb-2">2. Digite o Modelo do Aparelho</label>
-                <input type="text" id="campo-modelo" placeholder="Ex: Galaxy A14, iPhone 12, Poco X3 Pro..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-[#C5A880]">
-            </div>
-
-            <div>
-                <label class="block text-xs font-bold uppercase gold-text mb-1">3. O que você precisa ou o que está acontecendo?</label>
-                <p class="text-xs text-zinc-400 mb-3">Marque com ✅ uma ou mais opções abaixo:</p>
-
-                <div class="space-y-2.5" id="lista-opcoes">
-                    <label class="flex items-center gap-3 bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl cursor-pointer hover:border-zinc-700">
-                        <input type="checkbox" data-min="150" data-max="480" data-diag="Possível troca de módulo frontal (Tela/Display)" value="Tela quebrada / trincada / sem imagem" class="w-5 h-5 accent-emerald-500">
-                        <span class="text-sm">Tela quebrada, trincada ou sem imagem</span>
-                    </label>
-
-                    <label class="flex items-center gap-3 bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl cursor-pointer hover:border-zinc-700">
-                        <input type="checkbox" data-min="120" data-max="280" data-diag="Substituição de bateria desgastada" value="Bateria viciada / descarregando rápido / estufada" class="w-5 h-5 accent-emerald-500">
-                        <span class="text-sm">Bateria descarregando rápido ou estufada</span>
-                    </label>
-
-                    <label class="flex items-center gap-3 bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl cursor-pointer hover:border-zinc-700">
-                        <input type="checkbox" data-min="90" data-max="220" data-diag="Reparo/troca do conector de carga ou subplaca" value="Não carrega ou mau contato no cabo" class="w-5 h-5 accent-emerald-500">
-                        <span class="text-sm">Celular não carrega ou fica com mau contato</span>
-                    </label>
-
-                    <label class="flex items-center gap-3 bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl cursor-pointer hover:border-zinc-700">
-                        <input type="checkbox" data-min="120" data-max="450" data-diag="Análise de circuito de carga, bateria ou falha na placa" value="Celular não liga de jeito nenhum" class="w-5 h-5 accent-emerald-500">
-                        <span class="text-sm">Celular não liga de jeito nenhum</span>
-                    </label>
-
-                    <label class="flex items-center gap-3 bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl cursor-pointer hover:border-zinc-700">
-                        <input type="checkbox" data-min="100" data-max="350" data-diag="Banho químico / desoxidação e análise de componentes" value="Caiu na água ou teve contato com líquido" class="w-5 h-5 accent-emerald-500">
-                        <span class="text-sm">Caiu na água ou molhou</span>
-                    </label>
-
-                    <label class="flex items-center gap-3 bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl cursor-pointer hover:border-zinc-700">
-                        <input type="checkbox" data-min="80" data-max="200" data-diag="Reparo de tampa traseira, alto-falante ou microfone" value="Outro dano físico (tampa, som, microfone ou câmera)" class="w-5 h-5 accent-emerald-500">
-                        <span class="text-sm">Sofreu queda / dano na tampa, som ou câmera</span>
-                    </label>
-                </div>
-            </div>
-
-            <div>
-                <label class="block text-xs text-zinc-400 mb-1.5">Observação adicional (opcional):</label>
-                <input type="text" id="campo-obs" placeholder="Ex: Caiu hoje cedo, estava carregando..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-[#C5A880]">
-            </div>
-
-            <button onclick="calcularPreOrcamento()" class="w-full gold-bg hover:opacity-90 text-black font-extrabold py-3.5 rounded-xl text-sm uppercase tracking-wider transition">
-                Gerar Pré-Orçamento & Diagnóstico
-            </button>
-        </section>
-
-        <!-- ETAPA 3: RESULTADO E AVISO DE VISTORIA -->
-        <section id="sec-resultado" class="hidden bg-zinc-950 p-5 rounded-2xl border gold-border space-y-4">
-            <div class="text-center border-b border-zinc-900 pb-3">
-                <span class="text-xs uppercase tracking-widest text-cyan-400 font-bold">Pré-Análise Técnica</span>
-                <h3 id="res-titulo" class="text-lg font-extrabold text-white mt-1"></h3>
-            </div>
-
-            <div class="bg-zinc-900 p-4 rounded-xl space-y-2">
-                <p class="text-xs font-bold uppercase gold-text">Possíveis Causas / Serviços:</p>
-                <ul id="res-diagnosticos" class="text-sm text-zinc-200 space-y-1.5 list-disc pl-5"></ul>
-            </div>
-
-            <div class="bg-zinc-900 p-4 rounded-xl flex justify-between items-center">
-                <div>
-                    <p class="text-xs text-zinc-400">Estimativa inicial de valor:</p>
-                    <p id="res-valor" class="text-xl font-extrabold text-emerald-400 mt-0.5"></p>
-                </div>
-                <span class="text-[11px] bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-lg">Peça + Mão de obra</span>
-            </div>
-
-            <!-- AVISO OBRIGATÓRIO DE VISTORIA NA BANCADA -->
-            <div class="bg-amber-950/40 border border-amber-600/50 p-4 rounded-xl">
-                <p class="text-xs font-bold text-amber-400 mb-1">⚠️ ATENÇÃO — APENAS UMA PRÉ-ANÁLISE:</p>
-                <p class="text-xs text-zinc-300 leading-relaxed">
-                    O diagnóstico e os valores acima são <strong>estimativas baseadas nos sintomas marcados</strong> e <strong>não garantem</strong> que o defeito seja exclusivamente este. Para confirmar a causa exata e passar o orçamento final fechado, o aparelho precisa passar por uma <strong>vistoria física na bancada da Mike Cell</strong>.
-                </p>
-            </div>
-
-            <div class="space-y-2.5 pt-1">
-                <button onclick="enviarParaWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl text-sm flex items-center justify-center gap-2 transition">
-                    <span>📲 Enviar Orçamento no WhatsApp</span>
-                </button>
-                <button onclick="reiniciar()" class="w-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-semibold py-2.5 rounded-xl text-xs transition">
-                    Fazer outra consulta
-                </button>
-            </div>
-        </section>
-
-    </main>
-
-    <script>
-        let marcaAtual = '';
-        let resumoTextoWhatsApp = '';
-
-        function filtrarCatalogo() {
-            const termo = document.getElementById('busca-rapida').value.trim();
-            if (termo.length >= 2) {
-                if (!marcaAtual) marcaAtual = 'Modelo Pesquisado';
-                document.getElementById('label-marca').innerText = marcaAtual;
-                document.getElementById('campo-modelo').value = termo;
-                document.getElementById('sec-marcas').classList.add('hidden');
-                document.getElementById('sec-detalhes').classList.remove('hidden');
-            }
+        :root {
+            --gold: #C5A880;
+            --gold-bright: #E5C595;
+            --cyan: #00F2FE;
         }
-
-        function escolherMarca(marca) {
-            marcaAtual = marca;
-            document.getElementById('label-marca').innerText = marca;
-            document.getElementById('sec-marcas').classList.add('hidden');
-            document.getElementById('sec-detalhes').classList.remove('hidden');
-            document.getElementById('campo-modelo').focus();
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #030303;
+            color: #ffffff;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(197, 168, 128, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 85% 30%, rgba(0, 242, 254, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
         }
-
-        function voltarMarcas() {
-            document.getElementById('sec-detalhes').classList.add('hidden');
-            document.getElementById('sec-resultado').classList.add('hidden');
-            document.getElementById('sec-marcas').classList.remove('hidden');
+        .glass-card {
+            background: rgba(14, 14, 16, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.85);
         }
-
-        function calcularPreOrcamento() {
-            const modelo = document.getElementById('campo-modelo').value.trim();
-            if (!modelo) {
-                alert('Por favor, informe o modelo do aparelho.');
-                return;
-            }
-
-            const marcados = document.querySelectorAll('#lista-opcoes input[type="checkbox"]:checked');
-            if (marcados.length === 0) {
-                alert('Marque pelo menos uma opção com ✅ do que está acontecendo com o aparelho.');
-                return;
-            }
-
-            let minTotal = 0;
-            let maxTotal = 0;
-            let listaSintomas = [];
-            let listaDiagnosticos = [];
-
-            marcados.forEach(item => {
-                minTotal += parseFloat(item.getAttribute('data-min'));
-                maxTotal += parseFloat(item.getAttribute('data-max'));
-                listaSintomas.push(item.value);
-                listaDiagnosticos.push(item.getAttribute('data-diag'));
-            });
-
-            const obs = document.getElementById('campo-obs').value.trim();
-
-            document.getElementById('res-titulo').innerText = `${marcaAtual} — ${modelo}`;
-            document.getElementById('res-valor').innerText = `R$ ${minTotal.toFixed(0)} a R$ ${maxTotal.toFixed(0)}`;
-
-            const ul = document.getElementById('res-diagnosticos');
-            ul.innerHTML = '';
-            listaDiagnosticos.forEach(d => {
-                const li = document.createElement('li');
-                li.innerText = d;
-                ul.appendChild(li);
-            });
-
-            document.getElementById('sec-detalhes').classList.add('hidden');
-            document.getElementById('sec-resultado').classList.remove('hidden');
-
-            resumoTextoWhatsApp = `*PRÉ-ORÇAMENTO — MIKE CELL*\n\n` +
-                `📱 *Aparelho:* ${marcaAtual} ${modelo}\n` +
-                `📋 *Sintomas marcados:*\n` +
-                listaSintomas.map(s => `✅ ${s}`).join('\n') +
-                (obs ? `\n📝 *Obs:* ${obs}` : '') +
-                `\n\n💰 *Estimativa inicial:* R$ ${minTotal.toFixed(0)} a R$ ${maxTotal.toFixed(0)}\n` +
-                `⚠️ _Estou ciente de que é apenas uma pré-análise e que o aparelho precisa passar por vistoria na bancada para confirmação do defeito e valor final._`;
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #F3DCBA 0%, #C5A880 50%, #9E7F56 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        function enviarParaWhatsApp() {
-            // TROQUE O NÚMERO ABAIXO PELO SEU WHATSAPP COM DDD (EX: 5561999999999)
-            const seuWhatsApp = "5561999999999";
-            const url = `https://api.whatsapp.com/send?phone=${seuWhatsApp}&text=${encodeURIComponent(resumoTextoWhatsApp)}`;
-            window.open(url, '_blank');
+        .gold-btn {
+            background: linear-gradient(135deg, #DFC298 0%, #C5A880 55%, #A6885E 100%);
+            box-shadow: 0 4px 20px rgba(197, 168, 128, 0.35);
         }
-
-        function reiniciar() {
-            document.getElementById('campo-modelo').value = '';
-            document.getElementById('campo-obs').value = '';
-            document.getElementById('busca-rapida').value = '';
-            document.querySelectorAll('#lista-opcoes input[type="checkbox"]').forEach(cb => cb.checked = false);
-            voltarMarcas();
+        .gold-btn:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
         }
-    </script>
-</body>
-</html>
+        .brand-card
