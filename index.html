@@ -4,10 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mike Cell">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="logo-mikecell.jpg">
+    <link rel="icon" type="image/jpeg" href="logo-mikecell.jpg">
     <title>MIKE CELL — Assistência Técnica & Diagnóstico Inteligente</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #050505;
@@ -19,7 +29,7 @@
             background-size: 100% 100%, 28px 28px, 28px 28px;
         }
         .glass-card {
-            background: rgba(15, 15, 18, 0.92);
+            background: rgba(15, 15, 18, 0.94);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.9);
         }
@@ -31,15 +41,20 @@
         .gold-btn {
             background: linear-gradient(135deg, #DFC298 0%, #C5A880 55%, #A6885E 100%);
             box-shadow: 0 4px 20px rgba(197, 168, 128, 0.35);
+            cursor: pointer;
         }
-        .brand-card { transition: all 0.25s ease; }
-        .brand-card:hover {
+        .brand-card {
+            transition: all 0.2s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+        .brand-card:active, .brand-card:hover {
             border-color: #00F2FE;
-            box-shadow: 0 0 18px rgba(0, 242, 254, 0.28);
-            transform: translateY(-2px);
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.35);
+            transform: scale(0.98);
         }
         .logo-glow { filter: drop-shadow(0 0 22px rgba(197, 168, 128, 0.3)); }
-        .pulse-whatsapp { animation: pulseGreen 2s infinite; }
+        .pulse-whatsapp { animation: pulseGreen 2s infinite; cursor: pointer; }
         @keyframes pulseGreen {
             0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
             70% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
@@ -47,7 +62,7 @@
         }
         .custom-check:checked + div {
             border-color: #00F2FE;
-            background: rgba(0, 242, 254, 0.1);
+            background: rgba(0, 242, 254, 0.12);
         }
     </style>
 </head>
@@ -59,7 +74,7 @@
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
             <span class="text-zinc-300 font-medium">Bancada Online • DF</span>
         </div>
-        <button onclick="abrirModalApp()" class="text-cyan-400 font-bold bg-cyan-950/50 border border-cyan-500/30 px-2.5 py-1 rounded-full">
+        <button type="button" onclick="abrirModalApp()" class="text-cyan-400 font-bold bg-cyan-950/50 border border-cyan-500/30 px-2.5 py-1 rounded-full cursor-pointer">
             📲 Instalar App
         </button>
     </div>
@@ -74,8 +89,11 @@
 
     <main class="max-w-xl mx-auto px-4 mt-2 space-y-5">
 
-        <!-- PESQUISA RÁPIDA -->
-        <input type="text" id="busca-rapida" onkeyup="filtrarCatalogo()" placeholder="🔍 Buscar modelo direto (Ex: iPhone 12, A14, Poco X3)..." class="w-full bg-zinc-950 border border-zinc-800 text-sm text-white rounded-xl py-3.5 px-4 focus:outline-none focus:border-cyan-400">
+        <!-- PESQUISA RÁPIDA COM BOTÃO AVANÇAR -->
+        <form onsubmit="event.preventDefault(); usarBuscaRapida();" class="flex gap-2">
+            <input type="text" id="busca-rapida" placeholder="🔍 Digite o modelo (Ex: A03, iPhone 12)..." class="flex-1 bg-zinc-950 border border-zinc-800 text-sm text-white rounded-xl py-3.5 px-4 focus:outline-none focus:border-cyan-400">
+            <button type="submit" class="gold-btn text-black font-extrabold text-xs uppercase px-4 rounded-xl">Avançar</button>
+        </form>
 
         <!-- ETAPA 1: MARCAS -->
         <section id="sec-marcas" class="glass-card p-5 rounded-2xl">
@@ -84,27 +102,27 @@
                 <span class="text-[11px] text-cyan-400 font-semibold">Passo 1 de 3</span>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                <button onclick="escolherMarca('Samsung')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                <button type="button" onclick="escolherMarca('Samsung')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
                     <span class="block font-extrabold text-sm">SAMSUNG</span>
                     <span class="text-[10px] text-zinc-400">Linha A, S, M, Note</span>
                 </button>
-                <button onclick="escolherMarca('iPhone / Apple')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                <button type="button" onclick="escolherMarca('iPhone / Apple')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
                     <span class="block font-extrabold text-sm">IPHONE</span>
                     <span class="text-[10px] text-zinc-400">iOS • Placa & Tela</span>
                 </button>
-                <button onclick="escolherMarca('Xiaomi / Poco')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                <button type="button" onclick="escolherMarca('Xiaomi / Poco')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
                     <span class="block font-extrabold text-sm">XIAOMI</span>
                     <span class="text-[10px] text-zinc-400">Redmi, Poco, Mi</span>
                 </button>
-                <button onclick="escolherMarca('Motorola')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                <button type="button" onclick="escolherMarca('Motorola')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
                     <span class="block font-extrabold text-sm">MOTOROLA</span>
                     <span class="text-[10px] text-zinc-400">Moto G, Edge, One</span>
                 </button>
-                <button onclick="escolherMarca('Realme')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                <button type="button" onclick="escolherMarca('Realme')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
                     <span class="block font-extrabold text-sm">REALME</span>
                     <span class="text-[10px] text-zinc-400">Linha C, Narzo, GT</span>
                 </button>
-                <button onclick="escolherMarca('Outra Marca')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
+                <button type="button" onclick="escolherMarca('Outra Marca')" class="brand-card bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl text-center">
                     <span class="block font-extrabold text-sm">OUTRA</span>
                     <span class="text-[10px] text-zinc-400">LG, Asus, Infinix...</span>
                 </button>
@@ -118,12 +136,12 @@
                     <span class="text-[11px] uppercase text-zinc-400">Marca:</span>
                     <strong id="label-marca" class="text-sm gold-gradient-text ml-1 font-extrabold"></strong>
                 </div>
-                <button onclick="voltarMarcas()" class="text-xs text-cyan-400 underline font-semibold">← Trocar marca</button>
+                <button type="button" onclick="voltarMarcas()" class="text-xs text-cyan-400 underline font-semibold cursor-pointer">← Trocar marca</button>
             </div>
 
             <div>
                 <label class="block text-xs font-extrabold uppercase gold-gradient-text mb-2">2. Qual o modelo exato?</label>
-                <input type="text" id="campo-modelo" placeholder="Ex: Galaxy A14, iPhone 11, Poco X3 Pro..." class="w-full bg-zinc-900 border border-zinc-700 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-cyan-400">
+                <input type="text" id="campo-modelo" placeholder="Ex: Galaxy A03, iPhone 11, Poco X3..." class="w-full bg-zinc-900 border border-zinc-700 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-cyan-400">
             </div>
 
             <div>
@@ -131,7 +149,7 @@
                     <label class="block text-xs font-extrabold uppercase gold-gradient-text">3. Marque o que está acontecendo</label>
                     <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-700/40 px-2 py-0.5 rounded-full font-bold">2+ itens = 15% OFF no 2º</span>
                 </div>
-                <p class="text-xs text-zinc-400 mb-3">Selecione uma ou mais opções com ✅:</p>
+                <p class="text-xs text-zinc-400 mb-3">Toque nas opções desejadas com ✅:</p>
 
                 <div class="space-y-2.5" id="lista-opcoes">
                     <label class="block cursor-pointer">
@@ -215,4 +233,270 @@
                         <div class="flex items-center justify-between bg-zinc-900/90 border border-zinc-800 p-3.5 rounded-xl">
                             <div class="flex items-center gap-3">
                                 <span class="text-lg">🛠️</span>
-                                <span class="text-sm font-medium">Sofreu queda / dano
+                                <span class="text-sm font-medium">Sofreu queda / dano na tampa, som ou câmera</span>
+                            </div>
+                            <span class="text-xs text-cyan-400 font-bold">✅</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- DELIVERY DF -->
+            <div class="bg-zinc-900/80 border border-cyan-500/30 p-3.5 rounded-xl space-y-2.5">
+                <label class="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" id="chk-delivery" onchange="toggleBairro()" class="w-4 h-4 accent-cyan-400">
+                    <div>
+                        <span class="text-xs font-extrabold text-cyan-300 block">🛵 Solicitar Busca e Entrega (Leva e Traz DF)</span>
+                        <span class="text-[11px] text-zinc-400">Atendimento rápido em Ceilândia, Taguatinga e região</span>
+                    </div>
+                </label>
+                <div id="box-bairro" class="hidden pt-1">
+                    <input type="text" id="campo-bairro" placeholder="Digite seu bairro / quadra (Ex: P Sul, Taguatinga Norte...)" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-cyan-400">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs text-zinc-400 mb-1.5">Detalhe adicional (opcional):</label>
+                <input type="text" id="campo-obs" placeholder="Ex: Caiu hoje, estava carregando, tela piscando..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-400">
+            </div>
+
+            <button type="button" onclick="calcularPreOrcamento()" class="w-full gold-btn text-black font-black py-4 rounded-xl text-sm uppercase tracking-wider">
+                ⚡ Gerar Pré-Orçamento Inteligente
+            </button>
+        </section>
+
+        <!-- ETAPA 3: RESULTADO -->
+        <section id="sec-resultado" class="hidden glass-card p-5 rounded-2xl border border-amber-500/40 space-y-4">
+            <div class="text-center border-b border-zinc-800 pb-3">
+                <span class="text-[11px] uppercase tracking-widest text-cyan-400 font-extrabold">Laudo Preliminar • Mike Cell</span>
+                <h3 id="res-titulo" class="text-xl font-black text-white mt-1"></h3>
+                <p id="res-subtitulo-tela" class="text-xs text-amber-300 font-semibold mt-1"></p>
+            </div>
+
+            <div id="box-alerta-cruzado" class="hidden bg-red-950/60 border border-red-500/60 p-3.5 rounded-xl">
+                <p id="texto-alerta-cruzado" class="text-xs text-red-200 leading-relaxed font-medium"></p>
+            </div>
+
+            <div class="bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl space-y-2">
+                <p class="text-xs font-extrabold uppercase gold-gradient-text">Procedimentos Prováveis na Bancada:</p>
+                <ul id="res-diagnosticos" class="text-xs text-zinc-200 space-y-1.5 list-disc pl-4"></ul>
+            </div>
+
+            <div class="bg-zinc-900 border border-emerald-500/30 p-4 rounded-xl">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-[11px] uppercase tracking-wider text-zinc-400 font-bold">Estimativa Inicial:</p>
+                        <p id="res-valor" class="text-2xl font-black text-emerald-400 mt-0.5"></p>
+                    </div>
+                    <span class="text-[10px] bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-lg font-semibold">Peça + Mão de Obra</span>
+                </div>
+                <p id="res-badge-combo" class="hidden text-[11px] text-emerald-300 font-bold mt-2 pt-2 border-t border-zinc-800">
+                    🎉 Desconto Combo Bancada aplicado (15% OFF no segundo serviço)!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="bg-zinc-900/80 border border-zinc-800 p-2.5 rounded-xl">
+                    <span class="text-base block">🛡️</span>
+                    <span class="text-[10px] font-bold text-zinc-200 block mt-0.5">Garantia 90 Dias</span>
+                </div>
+                <div class="bg-zinc-900/80 border border-zinc-800 p-2.5 rounded-xl">
+                    <span class="text-base block">🔬</span>
+                    <span class="text-[10px] font-bold text-zinc-200 block mt-0.5">Teste Completo</span>
+                </div>
+                <div class="bg-zinc-900/80 border border-zinc-800 p-2.5 rounded-xl">
+                    <span class="text-base block">⚡</span>
+                    <span class="text-[10px] font-bold text-zinc-200 block mt-0.5">Agilidade DF</span>
+                </div>
+            </div>
+
+            <div class="bg-amber-950/40 border border-amber-500/50 p-4 rounded-xl">
+                <p class="text-xs font-extrabold text-amber-400 mb-1">⚠️ AVISO IMPORTANTE — PRÉ-ANÁLISE:</p>
+                <p class="text-[11px] text-zinc-300 leading-relaxed">
+                    Os valores e causas acima são apenas uma <strong>estimativa inicial</strong> baseada nos sintomas marcados e <strong>não garantem</strong> que o defeito seja exclusivamente este. Para diagnóstico definitivo e fechamento do orçamento, o aparelho passa por <strong>vistoria física na bancada da Mike Cell</strong>.
+                </p>
+            </div>
+
+            <div class="space-y-2.5 pt-1">
+                <button type="button" onclick="enviarParaWhatsApp()" class="w-full pulse-whatsapp bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-4 rounded-xl text-sm flex items-center justify-center gap-2">
+                    <span>📲 Agendar Vistoria no WhatsApp</span>
+                </button>
+                <button type="button" onclick="reiniciar()" class="w-full bg-zinc-900 hover:bg-zinc-800 text-zinc-400 font-semibold py-2.5 rounded-xl text-xs cursor-pointer">
+                    ← Fazer nova simulação
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL INSTALAR APP -->
+    <div id="modal-app" class="hidden fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4">
+        <div class="glass-card max-w-sm w-full p-6 rounded-2xl border border-cyan-500/40 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-sm font-extrabold uppercase gold-gradient-text">📲 Instale o App Mike Cell</h3>
+                <button type="button" onclick="fecharModalApp()" class="text-zinc-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
+            </div>
+            <p class="text-xs text-zinc-300">Adicione o atalho da Mike Cell na tela inicial do seu celular:</p>
+            <div class="space-y-2 text-xs text-zinc-200 bg-zinc-900 p-3.5 rounded-xl border border-zinc-800">
+                <p><strong class="text-cyan-400">Android (Chrome):</strong> Toque nos <strong>3 pontinhos (⋮)</strong> no topo e escolha <strong>"Adicionar à tela inicial"</strong>.</p>
+                <p class="pt-1 border-t border-zinc-800"><strong class="text-amber-400">iPhone (Safari):</strong> Toque em <strong>Compartilhar (□↑)</strong> embaixo e escolha <strong>"Adicionar à Tela de Início"</strong>.</p>
+            </div>
+            <button type="button" onclick="fecharModalApp()" class="w-full gold-btn text-black font-extrabold py-2.5 rounded-xl text-xs uppercase">Entendi</button>
+        </div>
+    </div>
+
+    <script>
+        let marcaAtual = '';
+        let resumoTextoWhatsApp = '';
+
+        function abrirModalApp() { document.getElementById('modal-app').classList.remove('hidden'); }
+        function fecharModalApp() { document.getElementById('modal-app').classList.add('hidden'); }
+
+        function toggleQualidadeTela() {
+            const box = document.getElementById('box-qualidade-tela');
+            document.getElementById('chk-tela').checked ? box.classList.remove('hidden') : box.classList.add('hidden');
+        }
+
+        function toggleBairro() {
+            const box = document.getElementById('box-bairro');
+            if (document.getElementById('chk-delivery').checked) {
+                box.classList.remove('hidden');
+                document.getElementById('campo-bairro').focus();
+            } else {
+                box.classList.add('hidden');
+            }
+        }
+
+        function usarBuscaRapida() {
+            const termo = document.getElementById('busca-rapida').value.trim();
+            if (!termo) {
+                alert('Digite o modelo do aparelho antes de clicar em Avançar.');
+                return;
+            }
+            if (!marcaAtual) marcaAtual = 'Modelo Informado';
+            document.getElementById('label-marca').innerText = marcaAtual;
+            document.getElementById('campo-modelo').value = termo;
+            document.getElementById('sec-marcas').classList.add('hidden');
+            document.getElementById('sec-resultado').classList.add('hidden');
+            document.getElementById('sec-detalhes').classList.remove('hidden');
+            document.activeElement.blur();
+            window.scrollTo({ top: 150, behavior: 'smooth' });
+        }
+
+        function escolherMarca(marca) {
+            marcaAtual = marca;
+            const termoBusca = document.getElementById('busca-rapida').value.trim();
+            document.getElementById('label-marca').innerText = marca;
+            if (termoBusca) {
+                document.getElementById('campo-modelo').value = termoBusca;
+            }
+            document.getElementById('sec-marcas').classList.add('hidden');
+            document.getElementById('sec-resultado').classList.add('hidden');
+            document.getElementById('sec-detalhes').classList.remove('hidden');
+            window.scrollTo({ top: 150, behavior: 'smooth' });
+        }
+
+        function voltarMarcas() {
+            document.getElementById('sec-detalhes').classList.add('hidden');
+            document.getElementById('sec-resultado').classList.add('hidden');
+            document.getElementById('sec-marcas').classList.remove('hidden');
+        }
+
+        function calcularPreOrcamento() {
+            const modelo = document.getElementById('campo-modelo').value.trim();
+            if (!modelo) { alert('Por favor, informe o modelo do celular.'); return; }
+
+            const marcados = document.querySelectorAll('#lista-opcoes input[type="checkbox"]:checked');
+            if (marcados.length === 0) { alert('Marque pelo menos uma opção com ✅.'); return; }
+
+            let minTotal = 0, maxTotal = 0;
+            let listaSintomas = [], listaDiagnosticos = [], tiposMarcados = [];
+            let detalheTela = '';
+
+            marcados.forEach((item, index) => {
+                let itemMin = parseFloat(item.getAttribute('data-min'));
+                let itemMax = parseFloat(item.getAttribute('data-max'));
+                const tipo = item.getAttribute('data-tipo');
+                tiposMarcados.push(tipo);
+
+                if (tipo === 'tela') {
+                    const radioTela = document.querySelector('input[name="qualidadeTela"]:checked');
+                    if (radioTela) {
+                        itemMin += parseFloat(radioTela.getAttribute('data-extra-min'));
+                        itemMax += parseFloat(radioTela.getAttribute('data-extra-max'));
+                        detalheTela = radioTela.value;
+                    }
+                }
+                if (index > 0) { itemMin *= 0.85; itemMax *= 0.85; }
+
+                minTotal += itemMin;
+                maxTotal += itemMax;
+                listaSintomas.push(item.value);
+                listaDiagnosticos.push(item.getAttribute('data-diag'));
+            });
+
+            const boxAlerta = document.getElementById('box-alerta-cruzado');
+            const textoAlerta = document.getElementById('texto-alerta-cruzado');
+            if (tiposMarcados.includes('agua')) {
+                boxAlerta.classList.remove('hidden');
+                textoAlerta.innerHTML = '🚨 <strong>ALERTA DE OXIDAÇÃO:</strong> Não coloque no carregador e não tente ligar! Traga o quanto antes para banho químico na bancada.';
+            } else if (tiposMarcados.includes('placa') && tiposMarcados.includes('carga')) {
+                boxAlerta.classList.remove('hidden');
+                textoAlerta.innerHTML = '⚡ <strong>DIAGNÓSTICO CRUZADO:</strong> Pode ser bateria zerada/conector danificado ou falha no CI de carga. Faremos o teste na fonte de bancada.';
+            } else {
+                boxAlerta.classList.add('hidden');
+            }
+
+            document.getElementById('res-badge-combo').classList.toggle('hidden', marcados.length < 2);
+            document.getElementById('res-subtitulo-tela').innerText = detalheTela ? `Opção de tela: ${detalheTela}` : '';
+
+            const obs = document.getElementById('campo-obs').value.trim();
+            const querDelivery = document.getElementById('chk-delivery').checked;
+            const bairro = document.getElementById('campo-bairro').value.trim();
+
+            document.getElementById('res-titulo').innerText = `${marcaAtual} — ${modelo}`;
+            document.getElementById('res-valor').innerText = `R$ ${Math.round(minTotal)} a R$ ${Math.round(maxTotal)}`;
+
+            const ul = document.getElementById('res-diagnosticos');
+            ul.innerHTML = '';
+            listaDiagnosticos.forEach(d => {
+                const li = document.createElement('li');
+                li.innerText = d;
+                ul.appendChild(li);
+            });
+
+            document.getElementById('sec-detalhes').classList.add('hidden');
+            document.getElementById('sec-resultado').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            resumoTextoWhatsApp = `*PRÉ-ORÇAMENTO — MIKE CELL*\n\n` +
+                `📱 *Aparelho:* ${marcaAtual} ${modelo}\n` +
+                (detalheTela ? `🖥️ *Tela escolhida:* ${detalheTela}\n` : '') +
+                `📋 *Sintomas marcados:*\n` +
+                listaSintomas.map(s => `✅ ${s}`).join('\n') +
+                (marcados.length >= 2 ? `\n🎉 *Combo Bancada:* 15% OFF aplicado no 2º reparo` : '') +
+                (querDelivery ? `\n🛵 *Leva e Traz DF:* Sim${bairro ? ' (' + bairro + ')' : ''}` : '') +
+                (obs ? `\n📝 *Obs:* ${obs}` : '') +
+                `\n\n💰 *Estimativa inicial:* R$ ${Math.round(minTotal)} a R$ ${Math.round(maxTotal)}\n` +
+                `⚠️ _Estou ciente de que é apenas uma pré-análise e que o aparelho precisa passar por vistoria na bancada para confirmação do defeito e valor final._`;
+        }
+
+        function enviarParaWhatsApp() {
+            const url = `https://api.whatsapp.com/send?phone=5561984689354&text=${encodeURIComponent(resumoTextoWhatsApp)}`;
+            window.location.href = url;
+        }
+
+        function reiniciar() {
+            document.getElementById('campo-modelo').value = '';
+            document.getElementById('campo-obs').value = '';
+            document.getElementById('campo-bairro').value = '';
+            document.getElementById('busca-rapida').value = '';
+            document.getElementById('chk-delivery').checked = false;
+            document.getElementById('box-bairro').classList.add('hidden');
+            document.getElementById('box-qualidade-tela').classList.add('hidden');
+            document.querySelectorAll('#lista-opcoes input[type="checkbox"]').forEach(cb => cb.checked = false);
+            voltarMarcas();
+        }
+    </script>
+</body>
+</html>
